@@ -1,84 +1,90 @@
 # Brent Oil Prices Time Series Analysis
 
-## Project Objectives
+## Overview
 
-This project aims to analyze Brent oil prices using advanced time series techniques to extract statistically valid insights relevant to business objectives. The analysis is structured into the following sub-objectives:
+This project provides a full-stack solution for analyzing Brent oil prices, detecting structural changes, and visualizing results interactively. It combines Python-based data science (EDA, change point detection, modeling) with a Flask backend API and a React dashboard frontend.
 
-- **Defining the data analysis workflow**
-- **Understanding the model and data**
-- **Extracting statistically valid insights in relation to the business objective**
+---
 
-## Task 1: Laying the Foundation for Analysis
+## Project Structure
 
-### Defining the Data Analysis Workflow
-- Outline the steps and processes for analyzing Brent oil prices data.
-- Research and compile major geopolitical events, OPEC decisions, and economic shocks relevant to the oil market. A structured dataset of 10-15 key events with start dates is included.
-- State assumptions and limitations, including the distinction between statistical correlation and causal impact.
-- Identify main media channels and formats for communicating results to stakeholders.
+- **data/**: Raw and processed datasets (`BrentOilPrices.csv`, `oil_market_key_events.csv`)
+- **notebook/**: Jupyter notebooks for EDA and change point analysis (`EDA.ipynb`, `changePointAnalysis.ipynb`, `BCPM.ipynb`)
+- **src/**: Python modules for preprocessing, statistical analysis, and event annotation
+- **backend/**: Flask API serving time series, change points, and event data
+- **dashboard/**: React app for interactive visualization and exploration
 
-### Understanding the Model and Data
-- Review key references to understand the concepts and models used.
-- Analyze time series properties (trend, stationarity) and discuss their impact on modeling choices.
-- Explain the purpose of change point models for identifying structural breaks in price data.
-- Describe expected outputs of change point analysis (e.g., change dates, new parameter values) and limitations.
+---
 
-## Task 2: Change Point Modeling and Insight Generation
+## Key Features
 
-### Part 2.1: Core Analysis
-- Implement Bayesian Change Point detection using PyMC3 to identify structural breaks in Brent oil prices.
-- Interpret model output to determine significant change dates (e.g., changes in mean price or volatility).
-- Compare detected change points with key events and hypothesize causal relationships.
-- Quantify the impact of major change points, e.g., "Following the OPEC production cut announcement around [Date], the average daily price shifted from $X to $Y, an increase of Z%."
+### 1. Data Analysis & Modeling
 
-### Part 2.2: Advanced Extensions (Optional)
-- Discuss incorporating other data sources (GDP, inflation, exchange rates) for a comprehensive model.
-- Mention advanced models (VAR, Markov-Switching) for further insights into oil price dynamics.
+- **Exploratory Data Analysis (EDA)**: Notebooks and scripts for trend, stationarity, and volatility analysis.
+- **Change Point Detection**: Bayesian and classical (e.g., CUSUM, PELT) methods to identify structural breaks.
+- **Event Annotation**: Major geopolitical and economic events are mapped to the time series for context.
+- **Statistical Modeling**: ARIMA, GARCH, and other models for forecasting and volatility analysis.
 
-### Suggested Workflow for Task 2
-- **Data Preparation and EDA:**
-  - Load and preprocess data, convert dates, plot price series, and analyze log returns for stationarity and volatility clustering.
-- **Bayesian Change Point Model (PyMC3):**
-  - Define switch point (tau) and "before/after" parameters.
-  - Use switch function to model parameter changes.
-  - Define likelihood and run MCMC sampling.
-- **Interpreting Output:**
-  - Check model convergence (r_hat, trace plots).
-  - Plot posterior distribution of change point.
-  - Quantify impact using posterior distributions of parameters.
+### 2. Backend API (Flask)
 
-## Task 3: Interactive Dashboard for Data Analysis Results
+- `/api/brent-oil-data`: Returns Brent oil price time series (dates, prices)
+- `/api/change-points`: Returns detected change points
+- `/api/events`: Returns key oil market events (date, description, type)
 
-Build a dashboard application using Flask (backend) and React (frontend) to visualize analysis results and help stakeholders explore the impact of events on Brent oil prices.
+### 3. Interactive Dashboard (React)
 
-### Key Components
-- **Backend (Flask):**
-  - Serve analysis results via APIs.
-  - Handle requests for datasets, model outputs, and metrics.
-  - (Optional) Integrate real-time data sources.
-- **Frontend (React):**
-  - User-friendly interface for displaying results.
-  - Interactive visualizations (Recharts, React Chart.js 2, D3.js).
-  - Features: filters, date ranges, event highlights, comparisons, and responsive design.
+- **Time Series Visualization**: Line chart of Brent oil prices with overlaid change points and event annotations.
+- **Change Point Details**: Clickable change points show event descriptions and quantitative impacts.
+- **Model Results**: Posterior distributions and parameter shifts visualized.
+- **Interactive Controls**: Filter by date range and event type.
+- **Responsive UI**: Built with React, Chart.js, and Bootstrap.
 
-### Key Features
-- Present historical trends, forecasts, and event correlations.
-- Visualize how specific events influenced prices (event highlights).
-- Enable filtering, date selection, and drill-down for deeper insights.
-- Display key indicators (volatility, average price changes around events).
+---
+
+## How to Run
+
+### 1. Data Preparation
+
+- Place `BrentOilPrices.csv` and `oil_market_key_events.csv` in the `data/` directory.
+
+### 2. Backend (Flask API)
+
+```bash
+cd backend
+pip install -r requirements.txt  # Ensure Flask, pandas, etc. are installed
+flask run
+```
+
+### 3. Frontend (React Dashboard)
+
+```bash
+cd dashboard
+npm install
+npm start
+```
+
+### 4. Notebooks
+
+- Open and run notebooks in `notebook/` for EDA and modeling.
+
+---
 
 ## Assumptions and Limitations
-- Statistical correlation does not imply causation; results should be interpreted with caution.
+
+- Statistical correlation does not imply causation; interpret results with caution.
 - Change point models identify structural breaks but may not capture all market dynamics.
 - Data quality and event selection impact analysis validity.
 
+---
+
 ## References
+
 - [PyMC3 Documentation](https://docs.pymc.io/)
 - [Time Series Analysis Texts]
 - [Brent Oil Market Reports]
 
-## Communication Channels
-- Results will be communicated via interactive dashboards, reports, and presentations tailored to stakeholders.
-
 ---
 
-For more details, see the `notebook/EDA.ipynb` and `data/` directory for datasets and exploratory analysis.
+## Communication
+
+- Results are communicated via interactive dashboards, notebooks, and reports.

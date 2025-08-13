@@ -1,0 +1,4 @@
+pandas
+pymc3
+matplotlib
+flask
